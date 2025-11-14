@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Notendurchschnitt Rechner</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: #fff;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            width: 350px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        input, button {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0 15px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        .result {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Notendurchschnitt Rechner</h1>
+        <div id="inputs">
+            <input type="number" placeholder="Note 1" class="note">
+            <input type="number" placeholder="Prozentsatz 1" class="percent">
+            <input type="number" placeholder="Note 2" class="note">
+            <input type="number" placeholder="Prozentsatz 2" class="percent">
+            <input type="number" placeholder="Note 3" class="note">
+            <input type="number" placeholder="Prozentsatz 3" class="percent">
+        </div>
+        <button onclick="calculateAverage()">Durchschnitt berechnen</button>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        function calculateAverage() {
+            const notes = document.querySelectorAll('.note');
+            const percents = document.querySelectorAll('.percent');
+            let total = 0;
+            let sumPercent = 0;
+
+            for (let i = 0; i < notes.length; i++) {
+                const note = parseFloat(notes[i].value);
+                const percent = parseFloat(percents[i].value);
+                if (!isNaN(note) && !isNaN(percent)) {
+                    total += note * (percent / 100);
+                    sumPercent += percent;
+                }
+            }
+
+            if (sumPercent === 0) {
+                document.getElementById('result').innerText = "Bitte geben Sie gültige Noten und Prozentsätze ein!";
+                return;
+            }
+
+            const average = total / (sumPercent / 100);
+            document.getElementById('result').innerText = "Dein gewichteter Notendurchschnitt: " + average.toFixed(2);
+        }
+    </script>
+</body>
+</html>
